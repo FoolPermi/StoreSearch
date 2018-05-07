@@ -5,6 +5,11 @@
 ## Build generated
 build/
 DerivedData/
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcworkspace/contents.xcworkspacedata
+/*.gcno
 
 ## Various settings
 *.pbxuser
