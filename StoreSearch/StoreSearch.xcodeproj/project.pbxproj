@@ -12,6 +12,7 @@
 		4D441B1720A07DF1003C706B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D441B1520A07DF1003C706B /* Main.storyboard */; };
 		4D441B1920A07DF3003C706B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D441B1820A07DF3003C706B /* Assets.xcassets */; };
 		4D441B1C20A07DF3003C706B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D441B1A20A07DF3003C706B /* LaunchScreen.storyboard */; };
+		4D441B2420A09A07003C706B /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D441B2320A09A07003C706B /* SearchResult.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		4D441B1820A07DF3003C706B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4D441B1B20A07DF3003C706B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4D441B1D20A07DF3003C706B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4D441B2320A09A07003C706B /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			children = (
 				4D441B1120A07DF1003C706B /* AppDelegate.swift */,
 				4D441B1320A07DF1003C706B /* SearchViewController.swift */,
+				4D441B2320A09A07003C706B /* SearchResult.swift */,
 				4D441B1520A07DF1003C706B /* Main.storyboard */,
 				4D441B1820A07DF3003C706B /* Assets.xcassets */,
 				4D441B1A20A07DF3003C706B /* LaunchScreen.storyboard */,
@@ -136,6 +139,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D441B1420A07DF1003C706B /* SearchViewController.swift in Sources */,
+				4D441B2420A09A07003C706B /* SearchResult.swift in Sources */,
 				4D441B1220A07DF1003C706B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -283,6 +287,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7LDCU5SV79;
 				INFOPLIST_FILE = StoreSearch/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -301,6 +306,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7LDCU5SV79;
 				INFOPLIST_FILE = StoreSearch/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
