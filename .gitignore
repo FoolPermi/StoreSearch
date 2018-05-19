@@ -12,6 +12,8 @@ DerivedData/
 /*.gcno
 
 ## Various settings
+*.xcuserstate
+project.xcworkspace
 *.pbxuser
 !default.pbxuser
 *.mode1v3
@@ -20,9 +22,11 @@ DerivedData/
 !default.mode2v3
 *.perspectivev3
 !default.perspectivev3
+xcuserdata
+UserInterfaceState.xcuserstate
+project.xcworkspace/
 xcuserdata/
-UserInterfaceState.xcuserstate 
-*.xcodeproj/*.xcworkspace/
+UserInterface.xcuserstate
 
 ## Other
 *.moved-aside
