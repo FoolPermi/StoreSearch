@@ -23,6 +23,8 @@ class SearchViewController: UIViewController {
     var hasSearched = false
     var isLoading = false
     
+    var dataTask: URLSessionDataTask?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.contentInset = UIEdgeInsets(top: 64, left: 0, bottom: 0, right: 0)
@@ -48,15 +50,16 @@ extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if !searchBar.text!.isEmpty {
             searchBar.resignFirstResponder()
+            dataTask?.cancel()
             isLoading = true
             tableView.reloadData()
             hasSearched = true
             searchResults = []
             let url = itunesURL(searchText: searchBar.text!)
             let urlSession = URLSession.shared
-            let dataTask = urlSession.dataTask(with: url) { (data, response, error) in
-                if let error = error {
-                    print("Failure: \(error)")
+            dataTask = urlSession.dataTask(with: url) { (data, response, error) in
+                if let error = error as NSError?, error.code == -999 {
+                    return
                 } else if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200{
                     if let data = data {
                         self.searchResults = self.parse(data: data)
@@ -77,7 +80,7 @@ extension SearchViewController: UISearchBarDelegate {
                     self.showNetworkError()
                 }
             }
-            dataTask.resume()
+            dataTask?.resume()
         }
     }
     

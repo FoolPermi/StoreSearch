@@ -22,6 +22,7 @@ DerivedData/
 !default.perspectivev3
 xcuserdata/
 UserInterfaceState.xcuserstate 
+*.xcodeproj/*.xcworkspace/
 
 ## Other
 *.moved-aside
