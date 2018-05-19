@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D16604E20B05DD100BD97CC /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D16604D20B05DD100BD97CC /* LoadingCell.xib */; };
 		4D441B1220A07DF1003C706B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D441B1120A07DF1003C706B /* AppDelegate.swift */; };
 		4D441B1420A07DF1003C706B /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D441B1320A07DF1003C706B /* SearchViewController.swift */; };
 		4D441B1720A07DF1003C706B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D441B1520A07DF1003C706B /* Main.storyboard */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4D16604D20B05DD100BD97CC /* LoadingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingCell.xib; sourceTree = "<group>"; };
 		4D441B0E20A07DF1003C706B /* StoreSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StoreSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D441B1120A07DF1003C706B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4D441B1320A07DF1003C706B /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 				4D441B2720A0A68D003C706B /* SearchResultCell.swift */,
 				4D441B2520A0A2DF003C706B /* SearchResultCell.xib */,
 				4D441B2320A09A07003C706B /* SearchResult.swift */,
+				4D16604D20B05DD100BD97CC /* LoadingCell.xib */,
 				4D441B1520A07DF1003C706B /* Main.storyboard */,
 				4D441B1820A07DF3003C706B /* Assets.xcassets */,
 				4D441B1A20A07DF3003C706B /* LaunchScreen.storyboard */,
@@ -136,6 +139,7 @@
 			files = (
 				4D441B1C20A07DF3003C706B /* LaunchScreen.storyboard in Resources */,
 				4D441B1920A07DF3003C706B /* Assets.xcassets in Resources */,
+				4D16604E20B05DD100BD97CC /* LoadingCell.xib in Resources */,
 				4D441B2620A0A2DF003C706B /* SearchResultCell.xib in Resources */,
 				4D441B2A20A0A965003C706B /* NothingFoundCell.xib in Resources */,
 				4D441B1720A07DF1003C706B /* Main.storyboard in Resources */,
