@@ -46,7 +46,7 @@ class SearchResultCell: UITableViewCell {
         
         artworkImageView.image = UIImage(named: "Placehoder")
         if let smallUrl = URL(string: result.imageSmall) {
-            downloadTask = artworkImageView.loadImage(url: smallUrl)
+            downloadTask = artworkImageView.loadImage(url: smallUrl)      
         }
     }
 
