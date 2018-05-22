@@ -15,6 +15,7 @@ class LandscapeViewController: UIViewController {
     
     var searchResults = [SearchResult]()
     private var firstTime = true
+    private var downloads = [URLSessionDownloadTask]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,11 +88,11 @@ class LandscapeViewController: UIViewController {
         var row = 0
         var column = 0
         var x = marginX
-        for (index, result) in searchResults.enumerated() {
-            let button = UIButton(type: .system)
-            button.backgroundColor = UIColor.white
-            button.setTitle("\(index)", for: .normal)
+        for (_, result) in searchResults.enumerated() {
+            let button = UIButton(type: .custom)
             button.frame = CGRect(x: x + paddingHorz, y: marginY + CGFloat(row) * itemHeight + paddingVert, width: buttonWidth, height: buttonHeight)
+            downloadImage(for: result, andPlaceOn: button)
+
             scrollView.addSubview(button)
             row += 1
             if row == rowPerPage {
@@ -118,6 +119,12 @@ class LandscapeViewController: UIViewController {
         }, completion: nil)
 
     }
+    
+    deinit {
+        for task in downloads {
+            task.cancel()
+        }
+    }
 
 }
 
@@ -126,6 +133,24 @@ extension LandscapeViewController : UIScrollViewDelegate {
         let width = scrollView.bounds.size.width
         let page = Int((scrollView.contentOffset.x + width / 2) / width)
         pageControl.currentPage = page
+    }
+}
+
+extension LandscapeViewController {
+    private func downloadImage(for searchResult: SearchResult, andPlaceOn button: UIButton) {
+        if let url = URL(string: searchResult.imageSmall) {
+            let task = URLSession.shared.downloadTask(with: url) { [weak button] (url, response, error) in
+                if error == nil, let url = url, let data = try? Data(contentsOf: url), let image = UIImage(data: data){
+                    DispatchQueue.main.async {
+                        if let button = button {
+                            button.setImage(image, for: .normal)
+                        }
+                    }
+                }
+            }
+            downloads.append(task)
+            task.resume()
+        }
     }
 }
 
