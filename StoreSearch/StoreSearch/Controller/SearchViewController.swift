@@ -211,15 +211,31 @@ extension SearchViewController {
         landscapeVC = storyboard!.instantiateViewController(withIdentifier: "LandscapeViewController") as? LandscapeViewController
         if let controller = landscapeVC {
             controller.view.frame = view.bounds;
+            controller.view.alpha = 0
             view.addSubview(controller.view)
             addChildViewController(controller)
-            controller.didMove(toParentViewController: self)
+            coordinator.animate(alongsideTransition: { _ in
+                controller.view.alpha = 1
+                self.searchBar.resignFirstResponder()
+                if self.presentedViewController != nil {
+                    self.dismiss(animated: true, completion: nil)
+                }
+            }) { _ in
+                controller.didMove(toParentViewController: self)
+            }
         }
     }
     
     func hideLandscape(with coordinator: UIViewControllerTransitionCoordinator) {
         if let controller = landscapeVC {
             controller.willMove(toParentViewController: nil)
+            coordinator.animate(alongsideTransition: {_ in
+                controller.view.alpha = 0
+            }) { _ in
+                controller.view.removeFromSuperview()
+                controller.removeFromParentViewController()
+                self.landscapeVC = nil
+            }
             controller.view.removeFromSuperview()
             controller.removeFromParentViewController()
             landscapeVC = nil
