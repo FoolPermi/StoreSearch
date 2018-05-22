@@ -30,7 +30,7 @@ class LandscapeViewController: UIViewController {
         
         scrollView.backgroundColor = UIColor(patternImage: UIImage(named: "LandscapeBackground")!)
         
-        
+        pageControl.numberOfPages = 0
         
     }
     
@@ -41,7 +41,7 @@ class LandscapeViewController: UIViewController {
         
         if firstTime {
             firstTime = false
-            titleButtons(searchResults)
+            tileButtons(searchResults)
         }
     }
     
@@ -50,7 +50,7 @@ class LandscapeViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    private func titleButtons(_ searchResults: [SearchResult]) {
+    private func tileButtons(_ searchResults: [SearchResult]) {
         var columnPerPage = 5
         var rowPerPage = 3
         var itemWidth: CGFloat = 96
@@ -91,10 +91,41 @@ class LandscapeViewController: UIViewController {
             let button = UIButton(type: .system)
             button.backgroundColor = UIColor.white
             button.setTitle("\(index)", for: .normal)
-            
+            button.frame = CGRect(x: x + paddingHorz, y: marginY + CGFloat(row) * itemHeight + paddingVert, width: buttonWidth, height: buttonHeight)
+            scrollView.addSubview(button)
+            row += 1
+            if row == rowPerPage {
+                row = 0
+                x += itemWidth
+                column += 1
+                if column == columnPerPage {
+                    column = 0
+                    x += marginX * 2
+                }
+            }
         }
+        let buttonsPerPage = columnPerPage * rowPerPage
+        let numberPages = 1 + (searchResults.count - 1) / buttonsPerPage
+        scrollView.contentSize = CGSize(width: CGFloat(numberPages) * viewWidth, height: scrollView.bounds.size.height)
         
+        pageControl.numberOfPages = numberPages
+        pageControl.currentPage = 0
+    }
+    
+    @IBAction func pageChanged(_ sender: UIPageControl) {
+        UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseInOut], animations: {
+            self.scrollView.contentOffset = CGPoint(x: self.scrollView.bounds.size.width * CGFloat(sender.currentPage), y: 0)
+        }, completion: nil)
+
     }
 
+}
+
+extension LandscapeViewController : UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let width = scrollView.bounds.size.width
+        let page = Int((scrollView.contentOffset.x + width / 2) / width)
+        pageControl.currentPage = page
+    }
 }
 
