@@ -18,24 +18,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We are in Landscape" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4gi-3g-jAa">
-                                <rect key="frame" x="205" y="150" width="159" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ykZ-j2-K3w">
+                                <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </scrollView>
+                            <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="g8x-Rz-G3v">
+                                <rect key="frame" x="264" y="200" width="39" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </pageControl>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="4gi-3g-jAa" firstAttribute="centerY" secondItem="XXs-x5-ZWr" secondAttribute="centerY" id="l23-hq-QMq"/>
-                            <constraint firstItem="4gi-3g-jAa" firstAttribute="centerX" secondItem="XXs-x5-ZWr" secondAttribute="centerX" id="l7A-c2-ot1"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="JhP-TF-MeD"/>
                     </view>
+                    <connections>
+                        <outlet property="pageControl" destination="g8x-Rz-G3v" id="u48-Fx-UPp"/>
+                        <outlet property="scrollView" destination="ykZ-j2-K3w" id="7I0-yJ-LqT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rTn-l7-7fF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="741" y="1045"/>
+            <point key="canvasLocation" x="740.49295774647885" y="1044.375"/>
         </scene>
         <!--Search-->
         <scene sceneID="tne-QT-ifu">
