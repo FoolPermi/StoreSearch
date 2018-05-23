@@ -39,6 +39,7 @@
                     <connections>
                         <outlet property="pageControl" destination="g8x-Rz-G3v" id="u48-Fx-UPp"/>
                         <outlet property="scrollView" destination="ykZ-j2-K3w" id="7I0-yJ-LqT"/>
+                        <segue destination="1kF-Ka-yg0" kind="presentation" identifier="ShowDetail" id="qCe-wh-AdG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rTn-l7-7fF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -120,12 +121,12 @@
         <scene sceneID="oAd-AI-3mJ">
             <objects>
                 <viewController id="1kF-Ka-yg0" userLabel="Detail" customClass="DetailViewController" customModule="StoreSearch" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" misplaced="YES" id="5pb-C4-opx">
+                    <view key="view" contentMode="scaleToFill" id="5pb-C4-opx">
                         <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IA8-iY-WAF" userLabel="Pop-up View">
-                                <rect key="frame" x="40" y="163" width="240" height="242.5"/>
+                                <rect key="frame" x="164" y="39" width="240" height="242.5"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9gy-m5-bXl">
                                         <rect key="frame" x="8" y="8" width="15" height="18"/>
@@ -247,4 +248,7 @@
         <image name="CloseButton" width="15" height="15"/>
         <image name="PriceButton" width="11" height="24"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="qCe-wh-AdG"/>
+    </inferredMetricsTieBreakers>
 </document>
