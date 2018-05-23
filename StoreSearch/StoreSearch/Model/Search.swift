@@ -11,9 +11,13 @@ import Foundation
 typealias SearchComplete = (Bool) -> Void
 
 class Search {
-    var searchResults: [SearchResult] = []
-    var hasSearched = false
-    var isLoading = false
+    
+    enum State {
+        case noSearchedYet
+        case loading
+        case noResult
+        case results([SearchResult])
+    }
     
     enum Category: Int {
         case all = 0
@@ -35,33 +39,35 @@ class Search {
         }
     }
     
+    private(set) var state: State = .noSearchedYet
     private var dataTask: URLSessionDataTask? = nil
+    
     
     func performSearch(for text: String, category: Category, completion: @escaping SearchComplete) {
         if !text.isEmpty {
             dataTask?.cancel()
-            isLoading = true
-            hasSearched = true
-            searchResults = []
+            state = .loading
             
             let url = itunesURL(searchText: text, category: category)
             let session = URLSession.shared
             dataTask = session.dataTask(with: url, completionHandler: { (data, response, error) in
                 var success = false
+                var newState = State.noSearchedYet
                 if let error = error as NSError?, error.code == -999 {
                     return
                 }
                 if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200, let data = data {
-                    self.searchResults = self.parse(data: data)
-                    self.searchResults.sort(by: <)
-                    self.isLoading = false
+                    var searchResults = self.parse(data: data)
+                    if searchResults.isEmpty {
+                        newState = .noResult
+                    }else {
+                        searchResults.sort(by: <)
+                        newState = .results(searchResults)
+                    }
                     success = true
                 }
-                if !success {
-                    self.hasSearched = false
-                    self.isLoading = false
-                }
                 DispatchQueue.main.async {
+                    self.state = newState
                     completion(success)
                 }
             })
