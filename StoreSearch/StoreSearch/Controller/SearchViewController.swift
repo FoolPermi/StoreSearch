@@ -47,14 +47,16 @@ class SearchViewController: UIViewController {
     }
     
     func performSearch() {
-        search.performSearch(for: searchBar.text!, category: segmentedControl.selectedSegmentIndex) { (success) in
-            if !success {
-                self.showNetworkError()
+        if let categoty = Search.Category(rawValue: segmentedControl.selectedSegmentIndex) {
+            search.performSearch(for: searchBar.text!, category: categoty) { (success) in
+                if !success {
+                    self.showNetworkError()
+                }
+                self.tableView.reloadData()
             }
-            self.tableView.reloadData()
+            tableView.reloadData()
+            searchBar.resignFirstResponder()
         }
-        tableView.reloadData()
-        searchBar.resignFirstResponder()
     }
 }
 
