@@ -90,6 +90,7 @@ class LandscapeViewController: UIViewController {
         var x = marginX
         for (_, result) in searchResults.enumerated() {
             let button = UIButton(type: .custom)
+            button.setBackgroundImage(UIImage(named: "LandscapeButton"), for: .normal)
             button.frame = CGRect(x: x + paddingHorz, y: marginY + CGFloat(row) * itemHeight + paddingVert, width: buttonWidth, height: buttonHeight)
             downloadImage(for: result, andPlaceOn: button)
 
