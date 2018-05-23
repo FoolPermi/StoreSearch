@@ -12,8 +12,8 @@ class LandscapeViewController: UIViewController {
 
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var pageControl: UIPageControl!
+    var search: Search!
     
-    var searchResults = [SearchResult]()
     private var firstTime = true
     private var downloads = [URLSessionDownloadTask]()
     
@@ -42,13 +42,44 @@ class LandscapeViewController: UIViewController {
         
         if firstTime {
             firstTime = false
-            tileButtons(searchResults)
+            switch search.state {
+            case .noSearchedYet:
+                break
+            case .noResult:
+                showNothingFoundLabel()
+            case .loading:
+                showSpinner()
+            case .results(let list):
+                tileButtons(list)
+            }
         }
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    private func showSpinner() {
+        let spinner = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        spinner.center = CGPoint(x: scrollView.bounds.midX + 0.5, y: scrollView.bounds.midY + 0.5)
+        spinner.tag = 1000
+        view.addSubview(spinner)
+        spinner.startAnimating()
+    }
+    
+    private func showNothingFoundLabel() {
+        let label = UILabel(frame: CGRect.zero)
+        label.text = "Nothing Found"
+        label.textColor = UIColor.white
+        label.backgroundColor = UIColor.clear
+        label.sizeToFit()
+        var rect = label.frame
+        rect.size.width = ceil(rect.size.width / 2) * 2
+        rect.size.height = ceil(rect.size.height / 2) * 2
+        label.frame = rect
+        label.center = CGPoint(x: scrollView.bounds.midX, y: scrollView.bounds.midY)
+        view.addSubview(label)
     }
     
     private func tileButtons(_ searchResults: [SearchResult]) {
@@ -88,10 +119,12 @@ class LandscapeViewController: UIViewController {
         var row = 0
         var column = 0
         var x = marginX
-        for (_, result) in searchResults.enumerated() {
+        for (index, result) in searchResults.enumerated() {
             let button = UIButton(type: .custom)
             button.setBackgroundImage(UIImage(named: "LandscapeButton"), for: .normal)
             button.frame = CGRect(x: x + paddingHorz, y: marginY + CGFloat(row) * itemHeight + paddingVert, width: buttonWidth, height: buttonHeight)
+            button.tag = 2000 + index
+            button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
             downloadImage(for: result, andPlaceOn: button)
 
             scrollView.addSubview(button)
@@ -114,11 +147,39 @@ class LandscapeViewController: UIViewController {
         pageControl.currentPage = 0
     }
     
+    func searchResultsReceived() {
+        hideSpinner()
+        switch search.state {
+        case .noSearchedYet, .loading, .noResult:
+            break
+        case .results(let list):
+            tileButtons(list)
+        }
+    }
+    
+    func hideSpinner() {
+        view.viewWithTag(1000)?.removeFromSuperview()
+    }
+    
     @IBAction func pageChanged(_ sender: UIPageControl) {
         UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseInOut], animations: {
             self.scrollView.contentOffset = CGPoint(x: self.scrollView.bounds.size.width * CGFloat(sender.currentPage), y: 0)
         }, completion: nil)
 
+    }
+    
+    @objc func buttonPressed(_ sender: UIButton) {
+        performSegue(withIdentifier: "ShowDetail", sender: sender)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowDetail" {
+            if case .results(let list) = search.state {
+                let detailViewController = segue.destination as! DetailViewController
+                let searchResult = list[(sender as! UIButton).tag - 2000]
+                detailViewController.searchResult = searchResult
+            }
+        }
     }
     
     deinit {
