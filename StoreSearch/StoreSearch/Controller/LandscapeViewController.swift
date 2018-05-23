@@ -43,8 +43,12 @@ class LandscapeViewController: UIViewController {
         if firstTime {
             firstTime = false
             switch search.state {
-            case .noSearchedYet, .loading, .noResult:
+            case .noSearchedYet:
                 break
+            case .noResult:
+                showNothingFoundLabel()
+            case .loading:
+                showSpinner()
             case .results(let list):
                 tileButtons(list)
             }
@@ -54,6 +58,28 @@ class LandscapeViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    private func showSpinner() {
+        let spinner = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        spinner.center = CGPoint(x: scrollView.bounds.midX + 0.5, y: scrollView.bounds.midY + 0.5)
+        spinner.tag = 1000
+        view.addSubview(spinner)
+        spinner.startAnimating()
+    }
+    
+    private func showNothingFoundLabel() {
+        let label = UILabel(frame: CGRect.zero)
+        label.text = "Nothing Found"
+        label.textColor = UIColor.white
+        label.backgroundColor = UIColor.clear
+        label.sizeToFit()
+        var rect = label.frame
+        rect.size.width = ceil(rect.size.width / 2) * 2
+        rect.size.height = ceil(rect.size.height / 2) * 2
+        label.frame = rect
+        label.center = CGPoint(x: scrollView.bounds.midX, y: scrollView.bounds.midY)
+        view.addSubview(label)
     }
     
     private func tileButtons(_ searchResults: [SearchResult]) {
@@ -116,6 +142,20 @@ class LandscapeViewController: UIViewController {
         
         pageControl.numberOfPages = numberPages
         pageControl.currentPage = 0
+    }
+    
+    func searchResultsReceived() {
+        hideSpinner()
+        switch search.state {
+        case .noSearchedYet, .loading, .noResult:
+            break
+        case .results(let list):
+            tileButtons(list)
+        }
+    }
+    
+    func hideSpinner() {
+        view.viewWithTag(1000)?.removeFromSuperview()
     }
     
     @IBAction func pageChanged(_ sender: UIPageControl) {
