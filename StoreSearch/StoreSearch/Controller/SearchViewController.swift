@@ -21,6 +21,8 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var landscapeVC: LandscapeViewController?
+    weak var splitViewDetail: DetailViewController?
+    
     
     private let search = Search()
     
@@ -34,7 +36,11 @@ class SearchViewController: UIViewController {
         cellNib = UINib(nibName: TableViewCellIdentifiers.loadingCell, bundle: nil)
         tableView.register(cellNib, forCellReuseIdentifier: TableViewCellIdentifiers.loadingCell)
         tableView.rowHeight = 80.0
-        searchBar.becomeFirstResponder()
+        title = NSLocalizedString("Search", comment: "split view master button")
+        
+        if UIDevice.current.userInterfaceIdiom != .pad {
+            searchBar.becomeFirstResponder()
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -121,8 +127,18 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        performSegue(withIdentifier: "ShowDetail", sender: indexPath)
+        searchBar.resignFirstResponder()
+        if view.window!.rootViewController!.traitCollection.horizontalSizeClass == .compact {
+            tableView.deselectRow(at: indexPath, animated: true)
+            performSegue(withIdentifier: "ShowDetail", sender: indexPath)
+        } else {
+            if case .results(let list) = search.state {
+                splitViewDetail?.searchResult = list[indexPath.row]
+            }
+            if splitViewController!.displayMode != .allVisible {
+                hideMasterPane()
+            }
+        }
     }
     
 }
@@ -145,6 +161,7 @@ extension SearchViewController {
                 let indexPath = sender as! IndexPath
                 let searchResult = list[indexPath.row]
                 detailViewController.searchResult = searchResult
+                detailViewController.isPopup = true
             }
         }
     }
@@ -197,6 +214,14 @@ extension SearchViewController {
             controller.view.removeFromSuperview()
             controller.removeFromParentViewController()
             landscapeVC = nil
+        }
+    }
+    
+    private func hideMasterPane() {
+        UIView.animate(withDuration: 0.25, animations: {
+            self.splitViewController?.preferredDisplayMode = .primaryHidden
+        }) { _ in
+            self.splitViewController?.preferredDisplayMode = .automatic
         }
     }
 }
